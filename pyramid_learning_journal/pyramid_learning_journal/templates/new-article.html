@@ -6,7 +6,7 @@
 
     <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" 
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
@@ -23,16 +23,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="article.html">Details</a>
+            <a class="nav-link" href="/detail">Details</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="new-article.html">New Post</a>
+            <a class="nav-link" href="/create">New Post</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="edit-article.html">Edit Post</a>
+            <a class="nav-link" href="/update">Edit Post</a>
           </li>
 <!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,19 +56,18 @@
       </div>
     </nav>
 
-
-
-    <main class="article-list">
-        <div class="card">
-          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-          <div class="card-body">
-            <h4 class="card-title">Title</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="article.html" class="btn btn-primary">Details</a>
-          </div>
+    <article>
+      <form>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Title</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Title">
         </div>
-    </main>
-
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Article Body</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+      </form>
+    </article>
 
 
   <!-- <script src="js/scripts.js"></script> -->   
