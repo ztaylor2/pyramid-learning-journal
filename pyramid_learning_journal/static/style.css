@@ -3,6 +3,11 @@ article {
     margin: auto;
 }
 
+.page-header {
+    display: block;
+    padding: 50px;
+}
+
 .article-content {
     width: 50%;
     margin: auto;
