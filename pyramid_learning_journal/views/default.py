@@ -10,13 +10,13 @@ HERE = os.path.dirname(__file__)
 
 @view_config(route_name='home', renderer='../templates/list_view.jinja2')
 def list_view(request):
-    """View config for list view."""
+    """View for listing journal entries."""
     return {"entries": ENTRIES}
 
 
 @view_config(route_name='detail', renderer='../templates/detail_view.jinja2')
 def detail_view(request):
-    """View config for detail view."""
+    """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
     for entry in ENTRIES:
         if entry['id'] == the_id:
