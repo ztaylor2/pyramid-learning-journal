@@ -1,14 +1,20 @@
 ENTRIES = [
     {
+        "id": 13,
+        "title": "Day 13",
+        "creation_date": "11/1/17", 
+        "body": "Today I learned about a priority queue.  I tried to integrate it into my heap, which may have been a harder implementation than building it with a dictionary.  I also built templating into my pyramid blog app.  Templating is pretty awesome.  It's pretty incredible how you can load a specific piece of data based on what the link of the route is.",
+    },
+    {
         "id": 12,
         "title": "Day 12",
-        "creation_date": "this.date", 
+        "creation_date": "30/31/17", 
         "body": "Today we learned about a binary heap. I thought that it was pretty cool trying to implement it with a list. Mapping the parent and child nodes together by their index was pretty cool. It would be interesting to compare that way with just creating nodes for each. We also learned about .jenja2 files which allow us to put variables into our html. I can see how this will come in very handy for templating.",
     },
     {
         "id": 11,
         "title": "Day 11",
-        "creation_date": "this.date", 
+        "creation_date": "30/30/17", 
         "body": "Yesterday we built out a pyramid app and then deployed it to heroku. It was a full day accomplishing all of this. The power of cookiecutter is pretty amazing. I would love to learn how to write software that writes software. The intricacies that went into all of the setup files for heroku was pretty astounding. There were a lot of nitty gritty details all over the place, and if you screw up one of them you'll be in a world of hurt. I definitely think that I need to solidify my knowledge and understanding on those details in the coming days. I'm not sure how I would have been able to do that without the codefellows notes, which makes me a little nervous.",
     },
     {
