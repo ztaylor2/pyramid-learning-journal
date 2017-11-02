@@ -12,7 +12,10 @@ HERE = os.path.dirname(__file__)
 @view_config(route_name='home', renderer='pyramid_learning_journal:templates/list_view.jinja2')
 def list_view(request):
     """View for listing journal entries."""
-    return {"entries": ENTRIES}
+    return {
+        "entries": ENTRIES,
+        "title": "Zach\'s Blog",
+    }
 
 
 @view_config(route_name='detail', renderer='pyramid_learning_journal:/templates/detail_view.jinja2')
@@ -21,14 +24,20 @@ def detail_view(request):
     the_id = int(request.matchdict['id'])
     for entry in ENTRIES:
         if entry['id'] == the_id:
-            return {"entry": entry}
+            title = "Zach\'s Blog - {}".format(entry["title"])
+            return {
+                "entry": entry,
+                "title": title,
+            }
     raise HTTPNotFound()
 
 
 @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
 def create_view(request):
     """View config for create view."""
-    return {}
+    return {
+        "title": "Zach\'s Blog - New Post",
+    }
 
 
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
@@ -37,5 +46,9 @@ def update_view(request):
     the_id = int(request.matchdict['id'])
     for entry in ENTRIES:
         if entry['id'] == the_id:
-            return {"entry": entry}
+            return {
+                "entry": entry,
+                "title": "Zach\'s Blog - Update Post",
+
+            }
     raise HTTPNotFound()
