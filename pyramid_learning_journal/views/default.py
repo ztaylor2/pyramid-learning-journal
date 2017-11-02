@@ -8,13 +8,13 @@ import os
 HERE = os.path.dirname(__file__)
 
 
-@view_config(route_name='home', renderer='../templates/list_view.jinja2')
+@view_config(route_name='home', renderer='pyramid_learning_journal:templates/list_view.jinja2')
 def list_view(request):
     """View for listing journal entries."""
     return {"entries": ENTRIES}
 
 
-@view_config(route_name='detail', renderer='../templates/detail_view.jinja2')
+@view_config(route_name='detail', renderer='pyramid_learning_journal:/templates/detail_view.jinja2')
 def detail_view(request):
     """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
@@ -23,13 +23,13 @@ def detail_view(request):
             return {"entry": entry}
 
 
-@view_config(route_name='create', renderer='../templates/create_view.jinja2')
+@view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
 def create_view(request):
     """View config for create view."""
     return {}
 
 
-@view_config(route_name='update', renderer='../templates/update_view.jinja2')
+@view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
     the_id = int(request.matchdict['id'])
