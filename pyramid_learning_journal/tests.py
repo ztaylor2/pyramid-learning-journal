@@ -52,11 +52,11 @@ def test_layout_root(testapp):
     """Test that the contents of the root page contains <article>."""
     response = testapp.get('/', status=200)
     html = response.html
-    assert 'Today we learned about a binary heap.' in html.find("p").text
+    assert 'Today we learned about a binary heap.' in html.find("section").text
 
 
 def test_root_contents(testapp):
-    """Test that the contents of the root page contains as many <p> tags as expenses."""
+    """Test that the contents of the root page contains as many <p> tags as entires."""
     from pyramid_learning_journal.data.data import ENTRIES
     response = testapp.get('/', status=200)
     html = response.html
