@@ -1,5 +1,6 @@
 """Views for the pyramid learning journal app."""
 from pyramid.view import view_config
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid_learning_journal.data.data import ENTRIES
 
 # import io
@@ -21,6 +22,7 @@ def detail_view(request):
     for entry in ENTRIES:
         if entry['id'] == the_id:
             return {"entry": entry}
+    raise HTTPNotFound()
 
 
 @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
@@ -36,3 +38,4 @@ def update_view(request):
     for entry in ENTRIES:
         if entry['id'] == the_id:
             return {"entry": entry}
+    raise HTTPNotFound()
