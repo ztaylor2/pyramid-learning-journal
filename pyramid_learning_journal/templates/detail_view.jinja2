@@ -47,7 +47,7 @@
           <p class="card-text">{{ entry.body }}</p>
         </div>
         <div class="card-footer text-muted">
-           Date <a href="{{ request.route_url('update', id=entry.id) }}" style="float: right">Edit Post</a>
+           {{ entry.creation_date }} <a href="{{ request.route_url('update', id=entry.id) }}" style="float: right">Edit Post</a>
         </div>
       </div>
     </main>
