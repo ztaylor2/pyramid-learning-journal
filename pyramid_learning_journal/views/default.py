@@ -23,14 +23,14 @@ def detail_view(request):
     """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
-    title = "Zach\'s Blog - {}".format(entry.title)
     if entry:
+        title = "Zach\'s Blog - {}".format(entry.title)
         return {
             "entry": entry,
             "title": title,
         }
     else:
-        raise HTTPNotFound()
+        raise HTTPNotFound
 
 
 @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
@@ -46,11 +46,11 @@ def update_view(request):
     """View config for update view."""
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
-    title = "Zach\'s Blog - {}".format(entry.title)
     if entry:
+        title = "Zach\'s Blog - {}".format(entry.title)
         return {
             "entry": entry,
             "title": title,
         }
     else:
-        raise HTTPNotFound()
+        raise HTTPNotFound
