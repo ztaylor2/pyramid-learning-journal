@@ -1,7 +1,8 @@
 """Views for the pyramid learning journal app."""
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
-from pyramid_learning_journal.data.data import ENTRIES
+# from pyramid_learning_journal.data.data import ENTRIES
+from pyramid_learning_journal.models.entries import Entry
 
 # import io
 import os
@@ -12,8 +13,9 @@ HERE = os.path.dirname(__file__)
 @view_config(route_name='home', renderer='pyramid_learning_journal:templates/list_view.jinja2')
 def list_view(request):
     """View for listing journal entries."""
+    entries = request.dbsession.query(Entry).all()
     return {
-        "entries": ENTRIES,
+        "entries": entries,
         "title": "Zach\'s Blog",
     }
 
@@ -22,14 +24,15 @@ def list_view(request):
 def detail_view(request):
     """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
-    for entry in ENTRIES:
-        if entry['id'] == the_id:
-            title = "Zach\'s Blog - {}".format(entry["title"])
-            return {
-                "entry": entry,
-                "title": title,
-            }
-    raise HTTPNotFound()
+    title = "Zach\'s Blog"
+    entry = request.dbsession.query(Entry).get(the_id)
+    if entry:
+        return {
+            "entry": entry,
+            "title": title,
+        }
+    else:
+        raise HTTPNotFound()
 
 
 @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
@@ -43,12 +46,13 @@ def create_view(request):
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
-    the_id = int(request.matchdict['id'])
-    for entry in ENTRIES:
-        if entry['id'] == the_id:
-            return {
-                "entry": entry,
-                "title": "Zach\'s Blog - Update Post",
+    # the_id = int(request.matchdict['id'])
+    # for entry in ENTRIES:
+    #     if entry['id'] == the_id:
+    #         return {
+    #             "entry": entry,
+    #             "title": "Zach\'s Blog - Update Post",
 
-            }
-    raise HTTPNotFound()
+    #         }
+    # raise HTTPNotFound()
+    pass
