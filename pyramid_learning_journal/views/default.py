@@ -1,10 +1,8 @@
 """Views for the pyramid learning journal app."""
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
-# from pyramid_learning_journal.data.data import ENTRIES
 from pyramid_learning_journal.models.entries import Entry
 
-# import io
 import os
 
 HERE = os.path.dirname(__file__)
@@ -24,8 +22,8 @@ def list_view(request):
 def detail_view(request):
     """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
-    title = "Zach\'s Blog"
     entry = request.dbsession.query(Entry).get(the_id)
+    title = "Zach\'s Blog - {}".format(entry.title)
     if entry:
         return {
             "entry": entry,
@@ -46,13 +44,13 @@ def create_view(request):
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
-    # the_id = int(request.matchdict['id'])
-    # for entry in ENTRIES:
-    #     if entry['id'] == the_id:
-    #         return {
-    #             "entry": entry,
-    #             "title": "Zach\'s Blog - Update Post",
-
-    #         }
-    # raise HTTPNotFound()
-    pass
+    the_id = int(request.matchdict['id'])
+    entry = request.dbsession.query(Entry).get(the_id)
+    title = "Zach\'s Blog - {}".format(entry.title)
+    if entry:
+        return {
+            "entry": entry,
+            "title": title,
+        }
+    else:
+        raise HTTPNotFound()
