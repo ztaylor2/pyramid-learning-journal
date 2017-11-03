@@ -2,11 +2,10 @@ import os
 
 from paste.deploy import loadapp
 from waitress import serve
+
+
 from urllib import parse
 import psycopg2
-
-
-# import os
 
 parse.uses_netloc.append("postgres")
 url = parse.urlparse(os.environ["DATABASE_URL"])
