@@ -19,10 +19,13 @@ from waitress import serve
 # )
 
 
-settings = {}
-if os.environ.get('DATABASE_URL', ''):
-    settings["sqlalchemy.url"] = os.environ["DATABASE_URL"]
-settings['pyramid.includes'] = ['pyramid_tm']
+# if os.environ.get('DATABASE_URL', ''):
+#     settings["sqlalchemy.url"] = os.environ["DATABASE_URL"]
+
+
+# settings = {}
+
+# settings['pyramid.includes'] = ['pyramid_tm']
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
