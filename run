@@ -3,4 +3,3 @@ set -e
 python runapp.py
 initdb production.ini
 python setup.py develop
-
