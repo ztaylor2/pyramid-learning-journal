@@ -36,8 +36,7 @@ def detail_view(request):
 @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
 def create_view(request):
     """View config for create view."""
-    # make it so that on submit a new model instance is created..... 
-    
+    # make it so that on submit a new model instance is created.....
     return {
         "title": "Zach\'s Blog - New Post",
     }

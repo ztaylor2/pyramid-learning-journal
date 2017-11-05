@@ -23,3 +23,10 @@ article {
     width: 50%;
     margin: auto;
 }
+
+.submit-button {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 1em;
+}
