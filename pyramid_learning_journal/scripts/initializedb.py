@@ -15,8 +15,9 @@ from ..models import (
     get_session_factory,
     get_tm_session,
     )
-from ..models import MyModel
-
+from pyramid_learning_journal.models.entries import Entry
+from pyramid_learning_journal.data.data import ENTRIES
+from datetime import datetime
 
 def usage(argv):
     cmd = os.path.basename(argv[0])
@@ -32,8 +33,10 @@ def main(argv=sys.argv):
     options = parse_vars(argv[2:])
     setup_logging(config_uri)
     settings = get_appsettings(config_uri, options=options)
-
+    if os.environ.get('DATABASE_URL', ''):
+        settings["sqlalchemy.url"] = os.environ["DATABASE_URL"]
     engine = get_engine(settings)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
 
     session_factory = get_session_factory(engine)
@@ -41,5 +44,13 @@ def main(argv=sys.argv):
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
 
-        model = MyModel(name='one', value=1)
-        dbsession.add(model)
+        many_models = []
+        for item in ENTRIES:
+            new_entry = Entry(
+                id=item["id"],
+                title=item["title"],
+                creation_date=datetime.now(),
+                body=item["body"],
+            )
+            many_models.append(new_entry)
+        dbsession.add_all(many_models)

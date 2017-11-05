@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
-python runapp.py
 python setup.py develop
+initdb production.ini
+python runapp.py

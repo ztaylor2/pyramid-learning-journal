@@ -2,11 +2,6 @@ import os
 
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'README.txt')) as f:
-    README = f.read()
-with open(os.path.join(here, 'CHANGES.txt')) as f:
-    CHANGES = f.read()
 
 requires = [
     'plaster_pastedeploy',
@@ -20,6 +15,7 @@ requires = [
     'SQLAlchemy',
     'transaction',
     'zope.sqlalchemy',
+    'psycopg2',
     'waitress',
 ]
 
@@ -34,7 +30,6 @@ setup(
     name='pyramid_learning_journal',
     version='0.0',
     description='Pyramid Learning Journal',
-    long_description=README + '\n\n' + CHANGES,
     classifiers=[
         'Programming Language :: Python',
         'Framework :: Pyramid',
@@ -57,7 +52,7 @@ setup(
             'main = pyramid_learning_journal:main',
         ],
         'console_scripts': [
-            'initialize_pyramid_learning_journal_db = pyramid_learning_journal.scripts.initializedb:main',
+            'initdb = pyramid_learning_journal.scripts.initializedb:main',
         ],
     },
 )

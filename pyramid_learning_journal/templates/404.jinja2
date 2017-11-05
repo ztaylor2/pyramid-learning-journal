@@ -1,8 +1,18 @@
 {% extends "layout.jinja2" %}
 
-{% block content %}
-<div class="content">
-  <h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">Alchemy scaffold</span></h1>
-  <p class="lead"><span class="font-semi-bold">404</span> Page Not Found</p>
-</div>
-{% endblock content %}
+{% block body %}
+        <main class="article-content">
+          <div class="page-header">
+            <h1>404 - Not Found</h1>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Document or file requested by the client was not found.</p>
+            </div>
+            <div class="card-footer text-muted">
+               <a class="navbar-brand" href="{{ request.route_url('home') }}">Home</a>
+            </div>
+          </div>
+        </main>
+{% endblock %}
+
