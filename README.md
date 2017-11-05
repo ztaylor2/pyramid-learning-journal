@@ -2,6 +2,8 @@
 
 A simple Pyramid app for a learning journal blog.
 
+Deployment: https://zachs-pyramid-blog.herokuapp.com/
+
 **Authors**:
 
 - Zach Taylor
@@ -35,3 +37,7 @@ A simple Pyramid app for a learning journal blog.
 ```
 $ tox
 ```
+
+## Testing Coverage 
+
+- Step3 Total: 42%
