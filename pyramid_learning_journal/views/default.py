@@ -59,8 +59,8 @@ def update_view(request):
     """View config for update view."""
     import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
-    entry = request.dbsession.query(Entry).get(the_id)
     if request.method == 'GET':
+        entry = request.dbsession.query(Entry).get(the_id)
         if entry:
             title = "Zach\'s Blog - {}".format(entry.title)
             return {
