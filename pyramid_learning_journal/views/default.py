@@ -57,7 +57,7 @@ def create_view(request):
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
     if request.method == 'GET':
