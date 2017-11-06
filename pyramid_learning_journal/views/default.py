@@ -1,6 +1,6 @@
 """Views for the pyramid learning journal app."""
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from pyramid_learning_journal.models.entries import Entry
 import datetime
 
@@ -34,29 +34,10 @@ def detail_view(request):
         raise HTTPNotFound
 
 
-# @view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
-# def create_view(request):
-#     """View config for create view."""
-#     if request.method == "POST" and request.POST:
-#         new_id = request.dbsession.query(Entry).count() + 1
-#         form_data = request.POST
-#         new_entry = Entry(
-#             title=form_data['title'],
-#             body=form_data['body'],
-#             creation_date=datetime.datetime.now(),
-#             id=new_id,
-#         )
-#         request.dbsession.add(new_entry)
-#         return HTTPFound(location=request.route_url('home'))
-
-#     return {
-#         "title": "Zach\'s Blog - New Post",
-#     }
-
-
-@view_config(route_name='create_view', renderer="pyramid_learning_journal:/templates/create_view.jinja2")
+@view_config(route_name='create', renderer="pyramid_learning_journal:/templates/create_view.jinja2")
 def create_view(request):
     """Create a new journal entry, validate it first before putting into db, return home pg."""
+    # import pdb; pdb.set_trace()
     if request.method == 'GET':
         return {}
     if request.method == 'POST':
@@ -70,19 +51,28 @@ def create_view(request):
             creation_date=datetime.datetime.now(),
         )
         request.dbsession.add(new_entry)
-        return HTTPFound(request.route_url('list_view'))
+        return HTTPFound(request.route_url('home'))
 
 
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
+    import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
-    if entry:
-        title = "Zach\'s Blog - {}".format(entry.title)
-        return {
-            "entry": entry,
-            "title": title,
-        }
-    else:
-        raise HTTPNotFound
+    if request.method == 'GET':
+        if entry:
+            title = "Zach\'s Blog - {}".format(entry.title)
+            return {
+                "entry": entry,
+                "title": title,
+            }
+        else:
+            raise HTTPNotFound
+    if request.method == 'POST':
+        if not all(field in request.POST for field in ['title', 'body']):
+            raise HTTPBadRequest
+        entry.title = request.POST['title']
+        entry.body = request.POST['body']
+        request.dbsession.add(entry)
+        return HTTPFound(request.route_url('home'))
