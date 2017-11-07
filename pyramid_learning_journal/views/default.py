@@ -13,8 +13,9 @@ HERE = os.path.dirname(__file__)
 def list_view(request):
     """View for listing journal entries."""
     entries = request.dbsession.query(Entry).all()
+    sorted_entries = sorted(entries, key=lambda entry: entry.id, reverse=True)
     return {
-        "entries": entries,
+        "entries": sorted_entries,
         "title": "Zach\'s Blog",
     }
 
@@ -60,6 +61,8 @@ def update_view(request):
     # import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
+    if not entry:
+        return HTTPNotFound
     if request.method == 'GET':
         if entry:
             title = "Zach\'s Blog - {}".format(entry.title)
@@ -67,12 +70,11 @@ def update_view(request):
                 "entry": entry,
                 "title": title,
             }
-        else:
-            raise HTTPNotFound
     if request.method == 'POST':
         if not all(field in request.POST for field in ['title', 'body']):
             raise HTTPBadRequest
         entry.title = request.POST['title']
         entry.body = request.POST['body']
         request.dbsession.add(entry)
-        return HTTPFound(request.route_url('home'))
+        request.dbsession.flush()
+        return HTTPFound(request.route_url('detail', id=the_id))
