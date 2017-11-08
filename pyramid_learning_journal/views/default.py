@@ -1,7 +1,8 @@
 """Views for the pyramid learning journal app."""
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPNotFound
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from pyramid_learning_journal.models.entries import Entry
+import datetime
 
 import os
 
@@ -12,8 +13,9 @@ HERE = os.path.dirname(__file__)
 def list_view(request):
     """View for listing journal entries."""
     entries = request.dbsession.query(Entry).all()
+    sorted_entries = sorted(entries, key=lambda entry: entry.id, reverse=True)
     return {
-        "entries": entries,
+        "entries": sorted_entries,
         "title": "Zach\'s Blog",
     }
 
@@ -33,26 +35,46 @@ def detail_view(request):
         raise HTTPNotFound
 
 
-@view_config(route_name='create', renderer='pyramid_learning_journal:/templates/create_view.jinja2')
+@view_config(route_name='create', renderer="pyramid_learning_journal:/templates/create_view.jinja2")
 def create_view(request):
-    """View config for create view."""
-    # make it so that on submit a new model instance is created..... 
-    
-    return {
-        "title": "Zach\'s Blog - New Post",
-    }
+    """Create a new journal entry, validate it first before putting into db, return home pg."""
+    # import pdb; pdb.set_trace()
+    if request.method == 'GET':
+        return {}
+    if request.method == 'POST':
+        if not all(field in request.POST for field in ['title', 'body']):
+            raise HTTPBadRequest
+        count = request.dbsession.query(Entry).count()
+        new_entry = Entry(
+            id=count + 1,
+            title=request.POST['title'],
+            body=request.POST['body'],
+            creation_date=datetime.datetime.now(),
+        )
+        request.dbsession.add(new_entry)
+        return HTTPFound(request.route_url('home'))
 
 
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
 def update_view(request):
     """View config for update view."""
+    # import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
-    if entry:
-        title = "Zach\'s Blog - {}".format(entry.title)
-        return {
-            "entry": entry,
-            "title": title,
-        }
-    else:
-        raise HTTPNotFound
+    if not entry:
+        return HTTPNotFound
+    if request.method == 'GET':
+        if entry:
+            title = "Zach\'s Blog - {}".format(entry.title)
+            return {
+                "entry": entry,
+                "title": title,
+            }
+    if request.method == 'POST':
+        if not all(field in request.POST for field in ['title', 'body']):
+            raise HTTPBadRequest
+        entry.title = request.POST['title']
+        entry.body = request.POST['body']
+        request.dbsession.add(entry)
+        request.dbsession.flush()
+        return HTTPFound(request.route_url('detail', id=the_id))

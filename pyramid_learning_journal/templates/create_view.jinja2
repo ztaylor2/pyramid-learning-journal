@@ -5,14 +5,17 @@
       <div class="page-header">
         <h1>New Post</h1>
       </div>
-      <form>
+      <form method="POST">
         <div class="form-group">
           <label for="exampleFormControlInput1">Title</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+          <textarea name="title" class="form-control" id="exampleFormControlTextarea1" rows="1" required></textarea>
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Article Body</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+          <div class="submit-button">
+            <input type="submit" class="btn btn-primary"></input>
+          </div>
         </div>
       </form>
     </article>
