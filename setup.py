@@ -18,6 +18,7 @@ requires = [
     'psycopg2',
     'waitress',
     'faker',
+    'passlib',
 ]
 
 tests_require = [
