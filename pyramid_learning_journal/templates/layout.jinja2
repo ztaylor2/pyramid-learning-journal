@@ -25,17 +25,22 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{ request.route_url('home') }}">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ request.route_url('create') }}">New Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ request.route_url('login') }}">Login</a>
-          </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <ul class="nav navbar-nav" style="float: right">
+          {% if not request.authenticated_userid %}
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('login') }}">Login</a>
+            </li>
+          {% endif %}   
+          {% if request.authenticated_userid %}
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('create') }}">New Post</a>
+            </li>
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('logout') }}">Logout</a>
+            </li>
+          {% endif %}
+        </ul>
       </div>
     </nav>
 

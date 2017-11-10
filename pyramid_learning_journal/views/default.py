@@ -85,6 +85,7 @@ def update_view(request):
 
 @view_config(route_name='login', renderer='../templates/login.jinja2')
 def login(request):
+    """Route for logging in."""
     if request.method == 'POST':
         username = request.params.get('username', '')
         password = request.params.get('password', '')
@@ -92,3 +93,10 @@ def login(request):
             headers = remember(request, username)
             return HTTPFound(location=request.route_url('home'), headers=headers)
     return {}
+
+
+@view_config(route_name='logout')
+def logout(request):
+    """Route for logging out."""
+    headers = forget(request)
+    return HTTPFound(request.route_url('home'), headers=headers)
