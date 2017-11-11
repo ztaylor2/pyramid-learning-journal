@@ -3,6 +3,10 @@ article {
     margin: auto;
 }
 
+.user_nav {
+    float: right;
+}
+
 .card {
     display: block;
     margin: 1em 0em 1em 0em

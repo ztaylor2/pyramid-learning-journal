@@ -4,6 +4,9 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from pyramid_learning_journal.models.entries import Entry
 import datetime
 
+from pyramid.security import remember, forget
+from pyramid_learning_journal.security import check_credentials
+
 import os
 
 HERE = os.path.dirname(__file__)
@@ -35,7 +38,7 @@ def detail_view(request):
         raise HTTPNotFound
 
 
-@view_config(route_name='create', renderer="pyramid_learning_journal:/templates/create_view.jinja2")
+@view_config(route_name='create', renderer="pyramid_learning_journal:/templates/create_view.jinja2", permission='secret')
 def create_view(request):
     """Create a new journal entry, validate it first before putting into db, return home pg."""
     # import pdb; pdb.set_trace()
@@ -55,7 +58,7 @@ def create_view(request):
         return HTTPFound(request.route_url('home'))
 
 
-@view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2')
+@view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2', permission='secret')
 def update_view(request):
     """View config for update view."""
     # import pdb; pdb.set_trace()
@@ -78,3 +81,22 @@ def update_view(request):
         request.dbsession.add(entry)
         request.dbsession.flush()
         return HTTPFound(request.route_url('detail', id=the_id))
+
+
+@view_config(route_name='login', renderer='../templates/login.jinja2')
+def login(request):
+    """Route for logging in."""
+    if request.method == 'POST':
+        username = request.params.get('username', '')
+        password = request.params.get('password', '')
+        if check_credentials(username, password):
+            headers = remember(request, username)
+            return HTTPFound(location=request.route_url('home'), headers=headers)
+    return {}
+
+
+@view_config(route_name='logout')
+def logout(request):
+    """Route for logging out."""
+    headers = forget(request)
+    return HTTPFound(request.route_url('home'), headers=headers)
