@@ -79,6 +79,15 @@ def test_detail_route_with_entry_detail(testapp, fill_the_db, dummy_request):
     assert query in response.ubody
 
 
+# def test_create_view_successful_post_redirects_home(testapp, journal_info, login, csrf_token):
+#     """Test create view directs to same loc."""
+#     # journal_info['csrf_token'] = csrf_token
+#     with pytest.raises(AppError):
+#         testapp.post("/create", journal_info)
+#     #     testapp.post('/journal/new-entry', {})
+#     # assert response.location == 'http://localhost/'
+
+
 # def test_detail_view_response_contains_expense_attrs():
 #     """Test that what's returned by the view contains one expense object."""
 #     from pyramid_learning_journal.views.default import detail_view

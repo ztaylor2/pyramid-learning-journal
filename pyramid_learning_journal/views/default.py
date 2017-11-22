@@ -12,7 +12,7 @@ import os
 HERE = os.path.dirname(__file__)
 
 
-@view_config(route_name='home', renderer='pyramid_learning_journal:templates/list_view.jinja2')
+@view_config(route_name='home', renderer='pyramid_learning_journal:templates/list_view.jinja2', require_csrf=False)
 def list_view(request):
     """View for listing journal entries."""
     entries = request.dbsession.query(Entry).all()
@@ -23,7 +23,7 @@ def list_view(request):
     }
 
 
-@view_config(route_name='detail', renderer='pyramid_learning_journal:/templates/detail_view.jinja2')
+@view_config(route_name='detail', renderer='pyramid_learning_journal:/templates/detail_view.jinja2', require_csrf=False)
 def detail_view(request):
     """View for detail view, sends entry data with id matching the request."""
     the_id = int(request.matchdict['id'])
@@ -41,7 +41,6 @@ def detail_view(request):
 @view_config(route_name='create', renderer="pyramid_learning_journal:/templates/create_view.jinja2", permission='secret')
 def create_view(request):
     """Create a new journal entry, validate it first before putting into db, return home pg."""
-    # import pdb; pdb.set_trace()
     if request.method == 'GET':
         return {}
     if request.method == 'POST':
@@ -61,7 +60,6 @@ def create_view(request):
 @view_config(route_name='update', renderer='pyramid_learning_journal:/templates/update_view.jinja2', permission='secret')
 def update_view(request):
     """View config for update view."""
-    # import pdb; pdb.set_trace()
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entry).get(the_id)
     if not entry:
@@ -83,7 +81,7 @@ def update_view(request):
         return HTTPFound(request.route_url('detail', id=the_id))
 
 
-@view_config(route_name='login', renderer='../templates/login.jinja2')
+@view_config(route_name='login', renderer='../templates/login.jinja2', require_csrf=False)
 def login(request):
     """Route for logging in."""
     if request.method == 'POST':
