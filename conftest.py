@@ -10,6 +10,7 @@ from pyramid_learning_journal.models import (
 )
 from pyramid_learning_journal.models.meta import Base
 
+import os
 
 FAKE = Faker()
 ENTRY_LIST = []
@@ -108,6 +109,17 @@ def fill_the_db(testapp):
 
 
 @pytest.fixture
+def journal_info():
+    """Create a info dictionary for edit or create later."""
+    info = {
+        'title': 'testing',
+        'body': 'testing_body',
+        'creation_date': '2017-11-02'
+    }
+    return info
+
+
+@pytest.fixture
 def edit_info():
     """Create a dict for simulating editing."""
     info = {
@@ -121,6 +133,8 @@ def edit_info():
 @pytest.fixture
 def login(testapp):
     """Log in with credentials."""
+    AUTH_PASSWORD = os.environ.get('AUTH_USERNAME', '')
+    AUTH_USERNAME = os.environ.get('AUTH_PASSWORD', '')
     secret = {
         'username': AUTH_PASSWORD,
         'password': AUTH_USERNAME
@@ -132,3 +146,11 @@ def login(testapp):
 def logout(testapp):
     """Log out route."""
     testapp.get('/logout')
+
+
+@pytest.fixture
+def csrf_token(testapp):
+    """Will get the csrf token."""
+    get_tk = testapp.get('/create')
+    token = get_tk.html.find('input', {'name': 'csrf_token'})['value']
+    return token
