@@ -1,0 +1,36 @@
+article {
+    width: 50%;
+    margin: auto;
+}
+
+.user_nav {
+    float: right;
+}
+
+.card {
+    display: block;
+    margin: 1em 0em 1em 0em
+}
+
+
+.page-header {
+    display: block;
+    padding: 2em 0em 1em 2em;
+}
+
+.article-content {
+    width: 50%;
+    margin: auto;
+}
+
+.article-list {
+    width: 50%;
+    margin: auto;
+}
+
+.submit-button {
+    display: block;
+    text-align: center;
+    margin: auto;
+    margin-top: 1em;
+}

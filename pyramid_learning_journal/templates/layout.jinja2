@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{{ request.static_path('pyramid_learning_journal:static/style.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
+          crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="{{ request.route_url('home') }}">Zach's Blog</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ request.route_url('home') }}">Home <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav" style="float: right">
+          {% if not request.authenticated_userid %}
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('login') }}">Login</a>
+            </li>
+          {% endif %}   
+          {% if request.authenticated_userid %}
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('create') }}">New Post</a>
+            </li>
+            <li class="nav-item" class="user_nav">
+              <a class="nav-link" href="{{ request.route_url('logout') }}">Logout</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+
+    <section id="content">
+        {% block body %}{% endblock %}
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" 
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" 
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" 
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
+            crossorigin="anonymous"></script>
+</body>
+</html>

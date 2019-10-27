@@ -1,0 +1,11 @@
+[run]
+source = pyramid_learning_journal
+omit =
+    pyramid_learning_journal/test*
+    pyramid_learning_journal/models/*
+    pyramid_learning_journal/scripts/*
+    pyramid_learning_journal/data/*
+    pyramid_learning_journal/views/notfound.py
+
+[report]
+show_missing = True

@@ -1,0 +1,17 @@
+{% extends "layout.jinja2" %}
+
+{% block body %}
+    <main class="article-content">
+      <div class="page-header">
+        <h1>{{ entry.title }}</h1>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">{{ entry.body }}</p>
+        </div>
+        <div class="card-footer text-muted">
+           {{ entry.creation_date }} <a href="{{ request.route_url('update', id=entry.id) }}" style="float: right">Edit Post</a>
+        </div>
+      </div>
+    </main>
+{% endblock %}
